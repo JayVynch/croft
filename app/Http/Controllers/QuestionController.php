@@ -33,13 +33,18 @@ class QuestionController extends Controller
             'tag' => 'string'
         ]);
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email
-        ]);
+        $user = User::where('email', $request->email)->first();
+        
+        if ($user == null) {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'ip' => $request->ip()
+            ]);  
+        }
 
         Question::create([
-            'user_id' => 1,
+            'user_id' => $user->id,
             'category_id' => $request->category,
             'title' => $request->title,
             'question' => $request->question,
@@ -84,20 +89,25 @@ class QuestionController extends Controller
 
     public function upvote(Request $request)
     {
+        $user = User::select('id')->where('ip',$request->ip())->first();
         
-        Vote::create([
-            'user_id' => 1,
-            'question_id' => $request->question,
-            'type' => $request->type
-        ]);
-
+        if(!Vote::where('user_id',$user->id)->where('question_id', $request->question)->exists()){
+            Vote::create([
+                'user_id' => $user->id,
+                'question_id' => $request->question,
+                'type' => $request->type
+            ]);
+        }
         return back();
     }
 
     public function downvote(Request $request)
     {
-        
-        Vote::where('user_id', 1)->where('type',$request->type)->delete();
+        $user = User::select('id')->where('ip',$request->ip())->first();
+
+        if(Vote::where('user_id',$user->id)->where('question_id', $request->question)->exists()){
+            Vote::where('user_id', 1)->where('type',$request->type)->delete();
+        }
 
         return back();
     }

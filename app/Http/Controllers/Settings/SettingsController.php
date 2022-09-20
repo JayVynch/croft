@@ -68,7 +68,6 @@ class SettingsController extends Controller
 
     public function storeQuestion(Request $request)
     {
-       
         $request->validate([
             'name' => 'string',
             'email' => 'email',
@@ -79,17 +78,23 @@ class SettingsController extends Controller
             'tag' => 'string'
         ]);
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'type' => 'admin'
-        ]);
+        $user = User::where('email', $request->email)->first();
+        
+        if ($user == null) {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'type' => 'admin',
+                'ip' => $request->ip()
+            ]);  
+        }
 
         Question::create([
-            'user_id' => 1,
+            'user_id' => $user->id,
             'category_id' => $request->category,
             'title' => $request->title,
             'question' => $request->question,
+            'slug' => str_replace(" ","-",$request->title),
             'question_type' => $request->status == 1 ? 'public' : 'private',
             'tag' => $request->tag
         ]);

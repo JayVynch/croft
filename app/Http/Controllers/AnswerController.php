@@ -22,7 +22,8 @@ class AnswerController extends Controller
         if ($user == null) {
             $user = User::create([
                 'name' => $request->name,
-                'email' => $request->email
+                'email' => $request->email,
+                'ip' => $request->ip()
             ]);  
         }
 
