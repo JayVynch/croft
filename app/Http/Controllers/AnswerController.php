@@ -17,8 +17,9 @@ class AnswerController extends Controller
             'answer' => 'string',
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('ip',$request->ip())->first();
 
+        
         if ($user == null) {
             $user = User::create([
                 'name' => $request->name,
@@ -33,6 +34,6 @@ class AnswerController extends Controller
             'question_id' => $request->question,
         ]);
 
-        return redirect()->route('pending','answer');;
+        return redirect()->route('pending','answer');
     }
 }
