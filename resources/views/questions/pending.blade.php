@@ -5,7 +5,7 @@
 @section('content')
     <div class="fixed top-0 left-0 w-1/2 h-full bg-white" aria-hidden="true"></div>
     <div class="fixed top-0 right-0 w-1/2 h-full bg-white" aria-hidden="true"></div>
-    <div class="relative w-full max-w-7xl flex flex-col">
+    <div class="relative w-full max-w-7xl justify-center flex flex-col">
     
         <div class=" lg:flex lg:items-center xl:px-8 py-8 lg:justify-between">
             <div class="flex-1 min-w-0">
@@ -24,7 +24,7 @@
         </div>
 
         <!--  column wrapper -->
-        <div class="flex-grow w-full max-w-7xl mx-auto xl:px-8 lg:flex">
+        <div class="flex-grow w-full max-w-7xl lg:justify-center mx-auto xl:px-8 lg:flex">
             <!-- main wrapper -->
             <div class="flex-1 min-w-0 bg-white xl:flex">
                 <div class="bg-white lg:min-w-0 lg:flex-1">
