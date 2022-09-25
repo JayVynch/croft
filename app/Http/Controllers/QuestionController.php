@@ -106,7 +106,7 @@ class QuestionController extends Controller
         $user = User::select('id')->where('ip',$request->ip())->first();
 
         if(Vote::where('user_id',$user->id)->where('question_id', $request->question)->exists()){
-            Vote::where('user_id', 1)->where('type',$request->type)->delete();
+            Vote::where('user_id', $user->id)->where('type',$request->type)->delete();
         }
 
         return back();
