@@ -157,7 +157,7 @@
                                                         </p>
                                                     <form action="{{ route('downvote') }}" method="post">
                                                         @csrf
-                                                        <input type="hidden" name="question" value="{{ $question->id }}">
+                                                        <input type="hidden" name="question" value="{{ $question->answer->first()->id }}">
                                                         <input type="hidden" name="type" value="answer">
                                                         <button class="text-sm text-gray-500" type="submit">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

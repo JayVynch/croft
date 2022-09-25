@@ -36,4 +36,5 @@ class AnswerController extends Controller
 
         return redirect()->route('pending','answer');
     }
+    
 }
