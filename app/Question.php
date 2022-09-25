@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\answer;
+use App\Answer;
 use App\User;
 use App\Category;
 use App\Tag;
