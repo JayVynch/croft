@@ -39,7 +39,7 @@ class QuestionController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'ip' => $request->ip()
+                'ip' => '127.0.0.2'
             ]);  
         }
 
