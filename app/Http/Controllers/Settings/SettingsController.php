@@ -48,8 +48,8 @@ class SettingsController extends Controller
     public function addQuestion()
     {
         $categories = Category::select('id','name')->get();
-
-        return view('admin.add-question',compact('categories'));
+        $question = Question::all();
+        return view('admin.add-question',compact('categories','question'));
     }
 
     public function question()

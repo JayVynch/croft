@@ -17,7 +17,7 @@ class AnswerController extends Controller
             'answer' => 'string',
         ]);
 
-        $user = User::where('ip',$request->ip())->first();
+        $user = User::where('email',$request->email)->first();
 
         
         if ($user == null) {
