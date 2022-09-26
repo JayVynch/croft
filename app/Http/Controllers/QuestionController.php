@@ -94,7 +94,7 @@ class QuestionController extends Controller
         if(!Vote::where('user_id',$user['id'])
         ->where('type', $request->type)->where('question_id',$request->question)->exists()){
             Vote::create([
-                'user_id' => $user['id'],
+                'user_id' => $user->id,
                 'question_id' => $request->question,
                 'type' => $request->type
             ]);
