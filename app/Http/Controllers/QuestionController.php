@@ -94,7 +94,7 @@ class QuestionController extends Controller
         if(!Vote::where('user_id',$user['id'])
         ->where('type', $request->type)->where('question_id',$request->question)->exists()){
             Vote::create([
-                'user_id' => $user['id'],
+                'user_id' => $request->ip(),
                 'question_id' => $request->question,
                 'type' => $request->type
             ]);
@@ -106,8 +106,8 @@ class QuestionController extends Controller
     {
         $user = User::select('id')->where('ip',$request->ip())->first();
 
-        if(Vote::where('user_id',$user['id'])->where('question_id', $request->question)->exists()){
-            Vote::where('user_id', $user['id'])->where('type',$request->type)->delete();
+        if(Vote::where('user_id',$request->ip())->where('question_id', $request->question)->exists()){
+            Vote::where('user_id', $request->ip())->where('type',$request->type)->delete();
         }
 
         return back();
