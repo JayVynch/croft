@@ -91,7 +91,7 @@ class QuestionController extends Controller
     {
         $user = User::select('id')->where('ip',$request->ip())->first();
         
-        if(!Vote::where('user_id',$user['id'])
+        if(!Vote::where('user_id',$request->ip())
         ->where('type', $request->type)->where('question_id',$request->question)->exists()){
             Vote::create([
                 'user_id' => $request->ip(),
