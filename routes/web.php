@@ -22,13 +22,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function (Request $request) {
 
-    $categories = Category::select('id','name')->get();
+    $categories = Category::select('id','name','slug')->get();
     $questions = Question::search('title',$request->search)->where('status','approved')->get();
     
     return view('welcome', compact('categories','questions'));
 });
 
-Route::get('/questions/categories/{id}',[ QuestionController::class, 'questionCategory'])->name('question.category');
+Route::get('/questions/categories/{slug}',[ QuestionController::class, 'questionCategory'])->name('question.category');
 
 Route::get('/new/questions',[ QuestionController::class, 'create'])->name('question.create');
 
@@ -36,7 +36,7 @@ Route::post('/new/questions',[ QuestionController::class, 'store']);
 
 Route::get('/pending/{slug}',[ QuestionController::class, 'pending'])->name('pending');
 
-Route::get('/questions/{id}/{slug}',[ QuestionController::class, 'show'])->name('question.single');
+Route::get('/questions/{slug}',[ QuestionController::class, 'show'])->name('question.single');
 
 Route::get('questions/modals',[QuestionController::class, 'modal'])->name('question.modal');
 
@@ -55,6 +55,8 @@ Route::post('/answers/comments/{id}', [CommentController::class,'store'])->name(
 
 Route::get('/settings/creates/categories',[SettingsController::class,'createCategory'])->name('new.cat');
 Route::post('/settings/creates/categories',[SettingsController::class,'storeCategory']);
+Route::get('/settings/tags',[SettingsController::class,'tags'])->name('tags');
+Route::get('/settings/tags/{tags}',[SettingsController::class,'showTags'])->name('question.tags');
 Route::get('/settings/questions',[SettingsController::class,'question'])->name('dashboard');
 Route::get('/settings/questions/new',[SettingsController::class,'addQuestion'])->name('add.question');
 Route::post('/settings/questions/new',[SettingsController::class,'storeQuestion']);

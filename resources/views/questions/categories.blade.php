@@ -88,7 +88,7 @@
                                                                     <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name={{ $question->user->name }}" alt="">
                                                                 </div>
                                                                 <div class="ml-4 px-6 py-2 whitespace-nowrap">
-                                                                    <a href="{{ route('question.single',['id' => $question->id, 'slug' => $question->slug]) }}" class="text-sm font-medium text-gray-900">
+                                                                    <a href="{{ route('question.single',$question->slug) }}" class="text-sm font-medium text-gray-900">
                                                                         {{ $question->title }}
                                                                     </a>
                                                                     <div class="text-sm flex  text-gray-500">
@@ -167,7 +167,7 @@
 
                             @foreach($categories as $category)
                                 <div class="border-t flex justify-between items-center border-b px-4 py-2 ">
-                                    <a href="{{ route('question.category',$category->id) }}" class="text-green-500">
+                                    <a href="{{ route('question.category',$category->slug) }}" class="text-green-500">
                                         {{ $category->name }}
                                     </a>
                                 </div>

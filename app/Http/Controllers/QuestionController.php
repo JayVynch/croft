@@ -56,23 +56,25 @@ class QuestionController extends Controller
         return redirect()->route('pending','question');
     }
 
-    public function show($id)
+    public function show($slug)
     {
-        $question = Question::with('answer')->where('id',$id)->where('status','approved')->first();
+        $question = Question::with('answer')->where('slug',$slug)->where('status','approved')->first();
 
         View::create([
-            'user_id' => 1,
-            'question_id' => $id,
+            'user_id' => request()->ip(),
+            'question_id' => $question['id'],
             'type' => 'question'
         ]);
 
         return view('questions.single', compact('question'));
     }
 
-    public function questionCategory($id)
+    public function questionCategory($slug)
     {
-        $categories = Category::select('id','name')->get();
-        $questions = Question::where('category_id',$id)->where('status','approved')->get();
+        $category = Category::select('id','name','slug')->where('slug',$slug)->firstOrFail();
+        
+        $categories = Category::select('id','name','slug')->get();
+        $questions = Question::where('category_id',$category->id)->where('status','approved')->get();
 
         return view('questions.categories',compact('questions','categories'));
     }

@@ -37,10 +37,13 @@ class SettingsController extends Controller
     public function storeCategory(Request $request)
     {
         $validate = $request->validate([
-            'name' => 'string'
+            'name' => 'string',
         ]);
 
-        Category::create(['name' => $request->name ]);   
+        Category::create([
+            'name' => $request->name,
+            'slug' => str_replace(" ","-",$request->name)
+        ]);   
 
         return back();
     }
@@ -162,5 +165,21 @@ class SettingsController extends Controller
         ]);
 
         return back();
+    }
+
+    public function tags()
+    {
+        $tags = Question::select('tag')->get();
+        $questions = Question::all();
+        return view('admin.tags', compact('tags','questions'));
+    }
+
+    public function showTags($tag)
+    {
+        
+        $questions = Question::all();
+        $tags = Question::where('tag',$tag)->get();
+
+        return view('admin.question-tags', compact('tags','questions'));
     }
 }
