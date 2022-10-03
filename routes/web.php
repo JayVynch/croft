@@ -36,6 +36,8 @@ Route::post('/new/questions',[ QuestionController::class, 'store']);
 
 Route::get('/pending/{slug}',[ QuestionController::class, 'pending'])->name('pending');
 
+Route::get('/questions/filters/{filter}',[QuestionController::class,'questionFilter'])->name('filter');
+
 Route::get('/questions/{slug}',[ QuestionController::class, 'show'])->name('question.single');
 
 Route::get('questions/modals',[QuestionController::class, 'modal'])->name('question.modal');
@@ -55,7 +57,17 @@ Route::post('/answers/comments/{id}', [CommentController::class,'store'])->name(
 
 Route::get('/settings/creates/categories',[SettingsController::class,'createCategory'])->name('new.cat');
 Route::post('/settings/creates/categories',[SettingsController::class,'storeCategory']);
+Route::get('/settings/edits/categories/{id}',[SettingsController::class,'editCategory'])->name('category.update');
+Route::post('/settings/edits/categories/{id}',[SettingsController::class,'updateCategory']);
+Route::get('/settings/deletes/categories/{id}',[SettingsController::class,'deleteCategory'])->name('category.delete');
+
+Route::get('/settings/filters/{filter}',[SettingsController::class,'filter'])->name('admin.filter');
+
 Route::get('/settings/tags',[SettingsController::class,'tags'])->name('tags');
+Route::get('/settings/edits/tags/{id}',[SettingsController::class,'editTag'])->name('tag.update');
+Route::post('/settings/edits/tags/{id}',[SettingsController::class,'updateTag']);
+Route::get('/settings/deleted/tags/{id}',[SettingsController::class,'deleteTag'])->name('tag.delete');
+
 Route::get('/settings/tags/{tags}',[SettingsController::class,'showTags'])->name('question.tags');
 Route::get('/settings/questions',[SettingsController::class,'question'])->name('dashboard');
 Route::get('/settings/questions/new',[SettingsController::class,'addQuestion'])->name('add.question');

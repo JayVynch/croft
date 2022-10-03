@@ -55,6 +55,46 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- table -->
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                    <div class="flex flex-col">
+                        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                                <div class="shadow mt-8 overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                                    <table class="min-w-full divide-y divide-gray-200">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Categories
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Odd row -->
+                                            @foreach($categories as $category)
+                                            <tr class="bg-white">
+                                                
+                                                <td class="px-6 py-4 whitespace-nowrap flex justify-between border-b text-sm text-gray-500">
+                                                    <a href="{{ route('question.category',$category->slug) }}" class="text-green-500">
+                                                        <span class="text-blue-400"> {{$category->name }} </span>
+                                                    </a>
+
+                                                    <div>
+                                                        <a class="bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('category.update',$category->id) }}">Edit</a>
+                                                        <a href="{{ route('category.delete',$category->id) }}" class="bg-red-600 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Delete</a>
+                                                    </div>
+                                                </td>
+                                                
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 </div>
             </div>
         </main>

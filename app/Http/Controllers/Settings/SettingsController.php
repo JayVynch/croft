@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Question;
 use App\Tag;
 use App\User;
+use Facade\Ignition\QueryRecorder\Query;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
@@ -29,9 +30,32 @@ class SettingsController extends Controller
         return back();
     }
 
+    public function filter($filter)
+    {
+        switch ($filter) {
+            case 'all':
+                $questions = Question::with('user')->paginate(20);
+                break;
+            case 'published':
+                $questions = Question::with('user')->where('status','approved')->get();
+                break;
+            
+            case 'pending':
+                $questions = Question::with('user')->where('status',$filter)->get();
+                break;
+            case 'private':
+                $questions = Question::with('user')->where('question_type',$filter)->get();
+                break;
+        }
+        
+
+        return view('admin.filters',compact('questions'));
+    }
+
     public function createCategory()
     {
-        return view('questions.category');
+        $categories = Category::all();
+        return view('questions.category', compact('categories'));
     }
 
     public function storeCategory(Request $request)
@@ -44,6 +68,31 @@ class SettingsController extends Controller
             'name' => $request->name,
             'slug' => str_replace(" ","-",$request->name)
         ]);   
+
+        return back();
+    }
+
+    public function editCategory($id)
+    {
+        $category = Category::where('id',$id)->first();
+
+        return view('admin.edit-categories',compact('category'));
+    }
+
+    public function updateCategory(Request $request,$id)
+    {
+    
+        Category::where('id',$id)->update([
+            'name' => $request->name,
+            'slug' => str_replace(" ","-",$request->name)
+        ]);
+
+        return back();
+    }
+
+    public function deleteCategory($id)
+    {
+        Category::where('id',$id)->delete();
 
         return back();
     }
@@ -169,17 +218,55 @@ class SettingsController extends Controller
 
     public function tags()
     {
-        $tags = Question::select('tag')->get();
-        $questions = Question::all();
+        $tags = Question::select('tag')->get()->reject(function($item){
+            return $item->tag == null;
+        });
+        $questions = Question::all()->reject(function($item){
+            return $item->tag == null;
+        });
+
         return view('admin.tags', compact('tags','questions'));
     }
 
     public function showTags($tag)
     {
         
-        $questions = Question::all();
-        $tags = Question::where('tag',$tag)->get();
+        $questions = Question::all()->reject(function($item){
+            return $item->tag == null;
+        });
+        
+        $tags = Question::where('tag',$tag)->get()->reject(function($item){
+            return $item->tag == null;
+        });
 
         return view('admin.question-tags', compact('tags','questions'));
+    }
+
+    public function editTag($tag)
+    {
+        $tag = Question::where('tag',$tag)->first();
+
+        return view('admin.edit-tag',compact('tag'));
+    }
+
+    public function updateTag(Request $request,$id)
+    {
+        Question::where('tag',$id)->get()->map( function ($item) use ($request){
+
+            $item->tag = $request->name;
+            $item->save();
+        });
+
+        return redirect()->route('tags');
+    }
+
+    public function deleteTag($id)
+    {
+        Question::where('tag',$id)->get()->map( function ($item){
+            $item->tag = null;
+            $item->save();
+        });
+
+        return redirect()->route('tags');
     }
 }

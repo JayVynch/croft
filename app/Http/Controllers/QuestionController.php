@@ -79,6 +79,34 @@ class QuestionController extends Controller
         return view('questions.categories',compact('questions','categories'));
     }
 
+    public function questionFilter($filter)
+    {
+        switch ($filter) {
+            case 'all':
+                $questions = Question::paginate(20);
+                break;
+            case 'open':
+                $questions = Question::where('stage',$filter)->get();
+                break;
+            
+            case 'resolved':
+                $questions = Question::where('stage',$filter)->get();
+                break;
+            case 'closed':
+                $questions = Question::where('stage',$filter)->get();
+                break;
+            case 'unanswered':
+                $questions = Question::all()->reject( function($items){
+                    return $items->answer == null;
+                });
+                break;
+        }
+        $categories = Category::select('id','name','slug')->get();
+        
+
+        return view('questions.filters',compact('questions','categories'));
+    }
+
     public function modal()
     {
         return view('questions.modal');

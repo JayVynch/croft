@@ -53,13 +53,11 @@
                                             <p>
                                                 Filter : 
 
-                                                <a href="#" class="text-green-500">All</a>
-                                                <a href="#" class="text-green-500">Open</a>
-                                                <a href="#" class="text-green-500">Resolved</a>
-                                                <a href="#" class="text-green-500">Closed</a>
-                                                <a href="#" class="text-green-500">Unanswered</a>
-                                                <a href="#" class="text-green-500">My Questions</a>
-                                                <a href="#" class="text-green-500">My Subscribers</a>
+                                                <a href="{{ route('filter','all') }}" class="text-green-500">All</a>
+                                                <a href="{{ route('filter','open') }}" class="text-green-500">Open</a>
+                                                <a href="{{ route('filter','resolved') }}" class="text-green-500">Resolved</a>
+                                                <a href="{{ route('filter','closed') }}" class="text-green-500">Closed</a>
+                                                <a href="{{ route('filter','unanswered') }}" class="text-green-500">Unanswered</a>
                                             </p>
                                         </div>
                                         <div class="mt-1 sm:mt-0 sm:col-span-2 flex-end">

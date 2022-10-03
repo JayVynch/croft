@@ -26,10 +26,10 @@
                     <div class="flex-1 min-w-0">
                         <div class="flex justify-between items-center">
                             <div class="text-xs">
-                            All({{ $comments->count() }}) | 
-                                <!-- <a href="#" class="text-blue-400 hover:text-blue-600">Mine(9)</a> | -->
-                                <a href="#" class="text-blue-400 hover:text-blue-600">Published({{ $comments->where('status','approved')->count() }})</a> |
-                                <a href="#" class="text-blue-400 hover:text-blue-600">Pending({{ $comments->where('status','pending')->count() }})</a>
+                            <a href="{{ route('admin.filter','all') }}" class="text-blue-400 hover:text-blue-600">All({{        $comments->count() }})</a> |
+                                <a href="{{ route('admin.filter','published') }}" class="text-blue-400 hover:text-blue-600">Published({{ $comments->where('status','approved')->count() }})</a> |
+                                <a href="{{ route('admin.filter','pending') }}" class="text-blue-400 hover:text-blue-600">Pending({{ $comments->where('status','pending')->count() }})</a> | 
+                                <a href="{{ route('admin.filter','private') }}" class="text-blue-400 hover:text-blue-600">private({{ $comments->where('question_type','private')->count() }})</a>
                             </div>
                             <div class="flex">
                                 <input type="search" name="search" id="search-question" class="flex-grow block min-w-0 text-xs border-gray-300 border">

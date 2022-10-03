@@ -26,11 +26,10 @@
                     <div class="flex-1 min-w-0">
                         <div class="flex justify-between items-center">
                             <div class="text-xs">
-                                All({{ $questions->count() }}) | 
-                                <!-- <a href="#" class="text-blue-400 hover:text-blue-600">Mine(9)</a> | -->
-                                <a href="#" class="text-blue-400 hover:text-blue-600">Published({{ $questions->where('status','approved')->count() }})</a> |
-                                <a href="#" class="text-blue-400 hover:text-blue-600">Pending({{ $questions->where('status','pending')->count() }})</a> | 
-                                <a href="#" class="text-blue-400 hover:text-blue-600">private({{ $questions->where('question_type','private')->count() }})</a>
+                                <a href="{{ route('admin.filter','all') }}" class="text-blue-400 hover:text-blue-600">All({{ $questions->count() }})</a> |
+                                <a href="{{ route('admin.filter','published') }}" class="text-blue-400 hover:text-blue-600">Published({{ $questions->where('status','approved')->count() }})</a> |
+                                <a href="{{ route('admin.filter','pending') }}" class="text-blue-400 hover:text-blue-600">Pending({{ $questions->where('status','pending')->count() }})</a> | 
+                                <a href="{{ route('admin.filter','private') }}" class="text-blue-400 hover:text-blue-600">private({{ $questions->where('question_type','private')->count() }})</a>
                             </div>
                             <div class="flex">
                                 <input type="search" name="search" id="search-question" class="flex-grow block min-w-0 text-xs border-gray-300 border">
@@ -104,12 +103,16 @@
                                         <tbody>
                                             <!-- Odd row -->
                                             @foreach($tags as $tag)
-                                            <tr class="bg-white">
+                                            <tr class="bg-white border-b">
                                                 
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <td class="px-6 py-4 whitespace-nowrap flex justify-between text-sm text-gray-500">
                                                     <a href="{{ route('question.tags',$tag->tag) }}" > 
                                                         <span class="text-blue-400"> {{$tag->tag }} </span>
                                                     </a>
+                                                    <div>
+                                                        <a class="bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('tag.update',$tag->tag) }}">Edit</a>
+                                                        <a href="{{ route('tag.delete',$tag->tag) }}" class="bg-red-600 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Delete</a>
+                                                    </div>
                                                 </td>
                                                 
                                             </tr>
