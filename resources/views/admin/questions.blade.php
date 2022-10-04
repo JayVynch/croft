@@ -95,9 +95,6 @@
                                     <table class="min-w-full divide-y divide-gray-200">
                                         <thead class="bg-gray-50">
                                             <tr>
-                                                <th scope="col" class="relative px-6 py-3">
-                                                    <input type="checkbox" name="select-all" id="select-all">
-                                                </th>
                                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     Title
                                                 </th>
@@ -131,9 +128,6 @@
                                             <!-- Odd row -->
                                             @foreach($questions as $question)
                                             <tr class="bg-white">
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                                    <input type="checkbox" name="select-1" id="select-1">
-                                                </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                     <a href="{{ route('show.question',$question->id) }}" > 
                                                         <span class="text-blue-400"> {{$question->title }} </span>
