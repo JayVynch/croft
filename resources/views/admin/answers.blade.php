@@ -143,7 +143,7 @@
                                                     {{ $answer->user->name }}
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                    {{ $answer->question->categories->first()->name }}
+                                                    {{ $answer->question->categories->first()['name'] }}
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                     <a href="#" class="text-blue-400 hover:text-blue-600">{{ $answer->question->tag }}</a>
