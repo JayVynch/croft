@@ -37,4 +37,26 @@ class AnswerController extends Controller
         return redirect()->route('pending','answer');
     }
     
+    public function editAnswer($id)
+    {
+        $answer = Answer::where('id',$id)->first();
+
+        return view('admin.edit-answer', compact('answer'));
+    }
+
+    public function updateAnswer(Request $request, $id)
+    {
+        $answer = Answer::where('id',$id)->first();
+
+        $answer->answer = $request->answer;
+        $answer->save();
+
+        return redirect()->route('set.answer');
+    }
+
+    public function deleteAnswer($id)
+    {
+        Answer::where('id',$id)->delete();
+        return redirect()->route('set.answer');
+    }
 }

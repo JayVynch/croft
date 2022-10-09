@@ -41,7 +41,7 @@
                             </div>
                         </div>
                         
-                        <div class="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6 w-full">
+                        <!-- <div class="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6 w-full">
                             <div class="sm:overflow-hidden w-full">
                                 <div class="bg-white py-6 px-4 space-y-6 sm:p-6 ">
                                     <div class="grid grid-cols-12 gap-6">
@@ -82,7 +82,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 

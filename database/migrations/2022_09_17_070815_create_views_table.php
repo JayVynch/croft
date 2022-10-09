@@ -16,7 +16,10 @@ class CreateViewsTable extends Migration
         Schema::create('views', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
-            $table->bigInteger('question_id');
+            // $table->bigInteger('question_id');
+            $table->foreignId('question_id')
+            ->constrained('questions')
+            ->onDelete('cascade');
             $table->string('type');
             $table->timestamps();
         });

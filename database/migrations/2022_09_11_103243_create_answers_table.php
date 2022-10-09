@@ -16,10 +16,15 @@ class CreateAnswersTable extends Migration
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->index();
-            $table->unsignedBigInteger('question_id')->index();
+            // $table->unsignedBigInteger('question_id')->index();
+            $table->foreignId('question_id')
+            ->constrained('questions')
+            ->onDelete('cascade');
             $table->text('answer');
             $table->string('status')->default('pending');
             $table->timestamps();
+
+            
         });
     }
 

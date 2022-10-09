@@ -29,7 +29,7 @@
                                 <a href="{{ route('admin.filter','all') }}" class="text-blue-400 hover:text-blue-600">All({{ $answer->count() }})</a> |
                                 <a href="{{ route('admin.filter','published') }}" class="text-blue-400 hover:text-blue-600">Published({{ $answer->where('status','approved')->count() }})</a> |
                                 <a href="{{ route('admin.filter','pending') }}" class="text-blue-400 hover:text-blue-600">Pending({{ $answer->where('status','pending')->count() }})</a> | 
-                                <a href="{{ route('admin.filter','private') }}" class="text-blue-400 hover:text-blue-600">private({{ $answer->where('question_type','private')->count() }})</a>
+                                <a href="{{ route('admin.filter','private') }}" class="text-blue-400 hover:text-blue-600">private({{ $answer->question->where('question_type','private')->count() }})</a>
                             </div>
                             <div class="flex">
                                 <input type="search" name="search" id="search-question" class="flex-grow block min-w-0 text-xs border-gray-300 border">
@@ -41,7 +41,7 @@
                             </div>
                         </div>
                         
-                        <div class="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6 w-full">
+                        <!-- <div class="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6 w-full">
                             <div class="sm:overflow-hidden w-full">
                                 <div class="bg-white py-6 px-4 space-y-6 sm:p-6 ">
                                     <div class="grid grid-cols-12 gap-6">
@@ -82,7 +82,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -147,6 +147,10 @@
                                                         <span>{{ $answer->votes->count() }}</span><small> &nbsp;votes</small>
                                                     </p>
                                                     
+                                                </div>
+                                                <div class="flex px-6 py-4 justify-end whitespace-nowrap text-right text-sm font-medium">
+                                                    <a href="{{ route('update.answer',$answer->id) }}" class="bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mx-2">Edit</a>
+                                                    <a href="{{ route('delete.answer',$answer->id) }}" class="bg-red-600 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Delete</a>
                                                 </div>
                                                 <div class="px-6 py-4 justify-end whitespace-nowrap text-right text-sm font-medium">
                                                 @if($answer->status != 'approved')

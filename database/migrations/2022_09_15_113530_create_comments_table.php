@@ -16,10 +16,15 @@ class CreateCommentsTable extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->index();
-            $table->unsignedBigInteger('answer_id')->index();
+            // $table->unsignedBigInteger('answer_id')->index();
+            $table->foreignId('answer_id')
+            ->constrained('answers')
+            ->onDelete('cascade');
             $table->string('status')->default('pending');
             $table->text('comment');
             $table->timestamps();
+
+            
         });
     }
 

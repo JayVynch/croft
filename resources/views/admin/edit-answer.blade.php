@@ -26,10 +26,10 @@
                     <div class="flex-1 min-w-0">
                         <div class="flex justify-between items-center">
                             <div class="text-xs">
-                                <a href="{{ route('admin.filter','all') }}" class="text-blue-400 hover:text-blue-600">All({{ $question->count() }})</a> |
-                                <a href="{{ route('admin.filter','published') }}" class="text-blue-400 hover:text-blue-600">Published({{ $question->where('status','approved')->count() }})</a> |
-                                <a href="{{ route('admin.filter','pending') }}" class="text-blue-400 hover:text-blue-600">Pending({{ $question->where('status','pending')->count() }})</a> | 
-                                <a href="{{ route('admin.filter','private') }}" class="text-blue-400 hover:text-blue-600">private({{ $question->where('question_type','private')->count() }})</a>
+                                <a href="{{ route('admin.filter','all') }}" class="text-blue-400 hover:text-blue-600">All({{ $answer->count() }})</a> |
+                                <a href="{{ route('admin.filter','published') }}" class="text-blue-400 hover:text-blue-600">Published({{ $answer->where('status','approved')->count() }})</a> |
+                                <a href="{{ route('admin.filter','pending') }}" class="text-blue-400 hover:text-blue-600">Pending({{ $answer->where('status','pending')->count() }})</a> | 
+                                <a href="{{ route('admin.filter','private') }}" class="text-blue-400 hover:text-blue-600">private({{ $answer->question->where('question_type','private')->count() }})</a>
                             </div>
                             <div class="flex">
                                 <input type="search" name="search" id="search-question" class="flex-grow block min-w-0 text-xs border-gray-300 border">
@@ -92,72 +92,14 @@
                         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                                 <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg px-4 py-2">
-                                    <form class="space-y-8 divide-y divide-gray-200" method="post" action="{{ route('add.question') }}">
+                                    <form action="{{ route('update.answer',$answer->id) }}" method="post" class="flex flex-col">
                                         @csrf
-                                        <div class="space-y-8 divide-y divide-gray-200">
-                                            <div>
-                                                <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-                                                    <div class="sm:col-span-6">
-                                                       
-                                                        <div class="mt-1">
-                                                            <input id="name" name="name" placeholder="name" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block px-2 py-2 w-full sm:text-sm border border-gray-300 rounded-md" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="sm:col-span-6">
-                                                        <div class="mt-1">
-                                                            <input type="email" placeholder="email" id="email" name="email" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block px-2 py-2 w-full sm:text-sm border border-gray-300 rounded-md" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="sm:col-span-6">
-                                                        <div class="mt-1">
-                                                            <input id="title" placeholder="question title" name="title" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block px-2 py-2 w-full sm:text-sm border border-gray-300 rounded-md" required>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="sm:col-span-6">
-                                                        <div class="mt-1">
-                                                            <textarea id="question" name="question" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2 sm:text-sm border border-gray-300 rounded-md" placeholder="Type Question" required></textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="sm:col-span-6">
-                                                        <label for="status" class="block text-lg font-medium mb-2 text-gray-700">
-                                                            Status
-                                                        </label>
-                                                        <div class="mt-1">
-                                                            <select id="status" name="status" class="block p-2 w-full cursor-pointer border border-gray-300">
-                                                                <option value="1">Public</option>
-                                                                <option value="2">Private</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="sm:col-span-6">
-                                                        <label for="about" class="block text-lg font-medium mb-2 text-gray-700">
-                                                            Category
-                                                        </label>
-                                                        <div class="mt-1">
-                                                            <select id="category" name="category" class="block w-full cursor-pointer border p-2 border-gray-300">
-                                                                @foreach($categories as $category)
-                                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="sm:col-span-6">
-                                                        <div class="mt-1">
-                                                            <input type="text" placeholder="Question tag" name="tag" id="tag" class="p-2 block w-full border pl-4 border-gray-300" >
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>        
+                                        
+                                        <textarea id="answer" name="answer" rows="3" class="px-4 py-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md" placeholder="your answer">{{ $answer->answer }}</textarea>
+                                        <div class="flex w-full">
+                                            <button class="px-4 py-2 text-white justify-end rounded-lg bg-green-500 mt-2" type="submit">update</button>
                                         </div>
-
-                                        <div class="pt-5">
-                                            <div class="flex justify-start">
-                                                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md uppercase text-white bg-green-500">
-                                                    Submit
-                                                </button>
-                                            </div>
-                                        </div>
+                                        
                                     </form>
                                 </div>
                             </div>

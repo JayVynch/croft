@@ -92,31 +92,21 @@
                         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                                 <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg px-4 py-2">
-                                    <form class="space-y-8 divide-y divide-gray-200" method="post" action="{{ route('add.question') }}">
+                                    <form class="space-y-8 divide-y divide-gray-200" method="post" action="{{ route('update.question',$quest->id) }}">
                                         @csrf
                                         <div class="space-y-8 divide-y divide-gray-200">
                                             <div>
                                                 <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-                                                    <div class="sm:col-span-6">
-                                                       
-                                                        <div class="mt-1">
-                                                            <input id="name" name="name" placeholder="name" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block px-2 py-2 w-full sm:text-sm border border-gray-300 rounded-md" required>
-                                                        </div>
-                                                    </div>
+                                                    
                                                     <div class="sm:col-span-6">
                                                         <div class="mt-1">
-                                                            <input type="email" placeholder="email" id="email" name="email" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block px-2 py-2 w-full sm:text-sm border border-gray-300 rounded-md" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="sm:col-span-6">
-                                                        <div class="mt-1">
-                                                            <input id="title" placeholder="question title" name="title" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block px-2 py-2 w-full sm:text-sm border border-gray-300 rounded-md" required>
+                                                            <input id="title" placeholder="question title" value="{{ $quest->title}}" name="title" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block px-2 py-2 w-full sm:text-sm border border-gray-300 rounded-md" required>
                                                         </div>
                                                     </div>
 
                                                     <div class="sm:col-span-6">
                                                         <div class="mt-1">
-                                                            <textarea id="question" name="question" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2 sm:text-sm border border-gray-300 rounded-md" placeholder="Type Question" required></textarea>
+                                                            <textarea id="question" name="question" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2 sm:text-sm border border-gray-300 rounded-md" placeholder="Type Question" required >{{ $quest->question }}</textarea>
                                                         </div>
                                                     </div>
                                                     <div class="sm:col-span-6">
@@ -125,8 +115,8 @@
                                                         </label>
                                                         <div class="mt-1">
                                                             <select id="status" name="status" class="block p-2 w-full cursor-pointer border border-gray-300">
-                                                                <option value="1">Public</option>
-                                                                <option value="2">Private</option>
+                                                                <option value="1" @if('public' == $quest->question_type) {{ 'selected' }} @endif>Public</option>
+                                                                <option value="2" @if('private' == $quest->question_type) {{ 'selected' }} @endif>Private</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -137,14 +127,14 @@
                                                         <div class="mt-1">
                                                             <select id="category" name="category" class="block w-full cursor-pointer border p-2 border-gray-300">
                                                                 @foreach($categories as $category)
-                                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                                    <option value="{{ $category->id }}" @if($category->id == $quest->category_id) {{ 'selected' }} @endif>{{ $category->name }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
                                                     <div class="sm:col-span-6">
                                                         <div class="mt-1">
-                                                            <input type="text" placeholder="Question tag" name="tag" id="tag" class="p-2 block w-full border pl-4 border-gray-300" >
+                                                            <input type="text" placeholder="Question tag" value="{{ $quest->tag }}" name="tag" id="tag" class="p-2 block w-full border pl-4 border-gray-300" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -154,7 +144,7 @@
                                         <div class="pt-5">
                                             <div class="flex justify-start">
                                                 <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md uppercase text-white bg-green-500">
-                                                    Submit
+                                                    Update
                                                 </button>
                                             </div>
                                         </div>

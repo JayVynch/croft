@@ -104,6 +104,43 @@ class SettingsController extends Controller
         return view('admin.add-question',compact('categories','question'));
     }
 
+    public function editQuestion($id)
+    {
+        $quest = Question::where('id',$id)->first();
+        $categories = Category::select('id','name')->get();
+        $question = Question::all();
+        return view('admin.edit-question',compact('categories','question','quest'));
+    }
+
+    public function updateQuestion(Request $request,$id)
+    {
+        
+        $request->validate([
+            'title' => 'string|nullable',
+            'question' => 'string|nullable',
+            'status' => 'numeric|nullable',
+            'category' => 'numeric|nullable',
+            'tag' => 'string|nullable'
+        ]);
+
+        
+        $quest = Question::where('id',$id)->first();
+        $quest->title = $request->title;
+        $quest->category_id = $request->category;
+        $quest->question = $request->question;
+        $quest->status = $request->status;
+        $quest->tag = $request->tag;
+        $quest->save();
+
+        return redirect()->route('dashboard');
+    }
+
+    public function deleteQuestion($id)
+    {
+        Question::where('id',$id)->delete();
+        return redirect()->route('dashboard');
+    }
+
     public function question()
     {
         $questions = Question::with('user')->get();
